@@ -1,6 +1,8 @@
 *Also available in: [Eesti](README.et.md) | [Русский](README.ru.md)*
 
-# ZoneEe
+# zonee / Lfmt.Zonee
+
+[![NuGet](https://img.shields.io/nuget/v/Lfmt.Zonee.svg)](https://www.nuget.org/packages/Lfmt.Zonee) [![NuGet](https://img.shields.io/nuget/v/Lfmt.Zonee.Cli.svg?label=Lfmt.Zonee.Cli)](https://www.nuget.org/packages/Lfmt.Zonee.Cli)
 
 Unofficial .NET client library and CLI for the [Zone.eu API v2](https://api.zone.eu/v2).
 

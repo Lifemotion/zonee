@@ -1,6 +1,6 @@
 Saadaval ka: [English](README.md) | [Eesti](README.et.md) | [Русский](README.ru.md)
 
-# ZoneEe
+# zonee / Lfmt.Zonee
 
 Mitteametlik .NET klientteek ja käsurearakendus [Zone.eu API v2](https://api.zone.eu/v2) jaoks.
 

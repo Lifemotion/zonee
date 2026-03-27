@@ -1,6 +1,6 @@
 Также доступно на: [English](README.md) | [Eesti](README.et.md) | [Русский](README.ru.md)
 
-# ZoneEe
+# zonee / Lfmt.Zonee
 
 Неофициальная клиентская библиотека .NET и CLI-утилита для [Zone.eu API v2](https://api.zone.eu/v2).
 
