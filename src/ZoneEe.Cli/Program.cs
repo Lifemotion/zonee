@@ -19,6 +19,10 @@ var app = new CommandApp();
 app.Configure(config =>
 {
     config.SetApplicationName("zonee");
+    config.SetApplicationVersion(
+        Assembly.GetExecutingAssembly()
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
+            ?? "dev");
 
     config.AddBranch("auth", auth =>
     {
