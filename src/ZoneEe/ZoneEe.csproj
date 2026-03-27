@@ -3,7 +3,6 @@
   <PropertyGroup>
     <!-- NuGet package metadata -->
     <PackageId>Lfmt.Zonee</PackageId>
-    <Version>0.1.0</Version>
     <Authors>Sasha Sovenko</Authors>
     <Description>API client for Zone.eu v2 — manage domains and DNS records</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

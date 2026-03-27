@@ -6,6 +6,11 @@
 - `src/ZoneEe.Cli/` — CLI tool (binary: `zonee`). Uses Spectre.Console.Cli.
 - Solution: `ZoneEe.sln`, shared settings: `Directory.Build.props` (.NET 10.0).
 
+## Versioning
+
+Version is set in `Directory.Build.props` (`<Version>`), shared by both projects.
+**Bump it before creating a release tag.** Tag format: `v0.1.1`.
+
 ## Build & run
 
 ```bash

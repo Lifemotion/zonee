@@ -8,7 +8,6 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>zonee</ToolCommandName>
     <PackageId>Lfmt.Zonee.Cli</PackageId>
-    <Version>0.1.0</Version>
     <Authors>Sasha Sovenko</Authors>
     <Description>CLI for Zone.eu — manage domains and DNS records</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
