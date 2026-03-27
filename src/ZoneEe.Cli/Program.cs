@@ -11,6 +11,7 @@ if (args is ["--version" or "-v"])
         .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
         ?? "dev";
     AnsiConsole.WriteLine($"zonee {version}");
+    AnsiConsole.WriteLine("https://github.com/Lifemotion/zonee");
     return 0;
 }
 
@@ -77,4 +78,10 @@ app.Configure(config =>
     });
 });
 
-return app.Run(args);
+var result = app.Run(args);
+
+if (args.Length == 0)
+    AnsiConsole.WriteLine();
+    AnsiConsole.MarkupLine("Docs & source: [blue underline]https://github.com/Lifemotion/zonee[/]");
+
+return result;

@@ -1,8 +1,12 @@
+*Also available in: [Eesti](README.et.md) | [Русский](README.ru.md)*
+
 # ZoneEe
 
-.NET client library and CLI for the [Zone.eu API v2](https://api.zone.eu/v2).
+Unofficial .NET client library and CLI for the [Zone.eu API v2](https://api.zone.eu/v2).
 
 Manage your domains and DNS records from the terminal or from any .NET application.
+
+> **Disclaimer:** This is a community project and is not affiliated with, endorsed by, or supported by [Zone Media OÜ](https://www.zone.eu). Use at your own risk.
 
 ## Features
 
@@ -202,6 +206,51 @@ var client = new ZoneClient(httpClient);
 - **Rate limit handling** -- automatically retries on HTTP 429 (up to 3 times with backoff)
 - **Auto-pagination** -- `ListAsync` methods fetch all pages transparently
 - **Detailed errors** -- `ZoneApiException` includes status code, response body, and Zone.eu's status message
+
+---
+
+## Common scenarios
+
+### Connect domain to Azure App Service
+
+```bash
+# Verify domain ownership
+zonee dns add example.com txt asuid.www.example.com "<verification-id>"
+
+# Point www to Azure
+zonee dns add example.com cname www.example.com myapp.azurewebsites.net
+
+# Point root domain to Azure IP
+zonee dns add example.com a example.com <azure-ip>
+zonee dns add example.com txt asuid.example.com "<verification-id>"
+```
+
+### Connect domain to Azure Static Web Apps
+
+```bash
+zonee dns add example.com cname www.example.com <app>.azurestaticapps.net
+zonee dns add example.com txt example.com "<validation-token>"
+zonee dns add example.com a example.com <azure-static-ip>
+```
+
+### Connect domain to Vercel
+
+```bash
+zonee dns add example.com a example.com 76.76.21.21
+zonee dns add example.com cname www.example.com cname.vercel-dns.com
+```
+
+### Let's Encrypt DNS-01 challenge
+
+```bash
+zonee dns add example.com txt _acme-challenge.example.com "<token>"
+# After certificate is issued:
+zonee dns delete example.com txt <record-id>
+```
+
+### Using with Claude Code
+
+Copy [`docs/CLAUDE-DNS-TEMPLATE.md`](docs/CLAUDE-DNS-TEMPLATE.md) into your project as `CLAUDE.md` (or append to existing one) so that Claude Code knows how to manage DNS for your domain.
 
 ---
 
