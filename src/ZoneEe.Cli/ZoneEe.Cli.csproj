@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>zonee</AssemblyName>
+
+    <!-- dotnet tool -->
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>zonee</ToolCommandName>
+    <PackageId>Lfmt.Zonee.Cli</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Sasha Sovenko</Authors>
+    <Description>CLI for Zone.eu — manage domains and DNS records</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <!-- Native AOT -->
+    <PublishAot>true</PublishAot>
+    <OptimizationPreference>Size</OptimizationPreference>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../ZoneEe/ZoneEe.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Spectre.Console.Cli" Version="0.49.*" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ZoneEe.Cli/ZoneEe.Cli.csproj" />
+    <Project Path="src/ZoneEe/ZoneEe.csproj" />
+  </Folder>
+</Solution>

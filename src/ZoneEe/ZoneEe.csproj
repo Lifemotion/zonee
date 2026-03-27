@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- NuGet package metadata -->
+    <PackageId>Lfmt.Zonee</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Sasha Sovenko</Authors>
+    <Description>API client for Zone.eu v2 — manage domains and DNS records</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>zone;zone.eu;dns;domain;api;zonee</PackageTags>
+    <PackageProjectUrl>https://github.com/Lifemotion/zonee</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Lifemotion/zonee.git</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>

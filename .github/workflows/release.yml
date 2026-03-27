@@ -1,0 +1,106 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-cli:
+    strategy:
+      matrix:
+        include:
+          - rid: win-x64
+            os: windows-latest
+            binary: zonee.exe
+            archive: zonee-win-x64.zip
+          - rid: linux-x64
+            os: ubuntu-latest
+            binary: zonee
+            archive: zonee-linux-x64.tar.gz
+          - rid: linux-arm64
+            os: ubuntu-latest
+            binary: zonee
+            archive: zonee-linux-arm64.tar.gz
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install cross-compilation tools
+        if: matrix.rid == 'linux-arm64'
+        run: |
+          sudo dpkg --add-architecture arm64
+          sudo rm -f /etc/apt/sources.list.d/arm64.list
+          sudo bash -c 'cat > /etc/apt/sources.list.d/ports-arm64.sources << SRCEOF
+          Types: deb
+          URIs: http://ports.ubuntu.com/ubuntu-ports/
+          Suites: noble noble-updates noble-security
+          Components: main restricted universe
+          Architectures: arm64
+          SRCEOF'
+          for f in /etc/apt/sources.list.d/ubuntu.sources; do
+            if [ -f "$f" ] && ! grep -q "Architectures:" "$f"; then
+              sudo sed -i '/^Types:/a Architectures: amd64' "$f"
+            fi
+          done
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu zlib1g-dev:arm64
+
+      - name: Publish
+        run: dotnet publish src/ZoneEe.Cli/ZoneEe.Cli.csproj -c Release -r ${{ matrix.rid }} -o out -p:StripSymbols=false
+
+      - name: Create archive
+        shell: bash
+        run: |
+          cd out
+          if [[ "${{ matrix.archive }}" == *.zip ]]; then
+            7z a ../${{ matrix.archive }} ${{ matrix.binary }}
+          else
+            tar czf ../${{ matrix.archive }} ${{ matrix.binary }}
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.archive }}
+          path: ${{ matrix.archive }}
+
+  publish-nuget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Pack library
+        run: dotnet pack src/ZoneEe/ZoneEe.csproj -c Release -o nupkgs
+
+      - name: Pack CLI tool
+        run: dotnet pack src/ZoneEe.Cli/ZoneEe.Cli.csproj -c Release -o nupkgs
+
+      - name: Push to NuGet
+        run: dotnet nuget push "nupkgs/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+  release:
+    needs: [build-cli, publish-nuget]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: zonee-*
+          generate_release_notes: true
