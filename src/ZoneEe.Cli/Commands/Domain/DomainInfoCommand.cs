@@ -33,14 +33,12 @@ internal class DomainInfoCommand : AsyncCommand<DomainInfoSettings>
 
         var table = OutputFormatter.CreateTable("Property", "Value");
         table.AddRow("Name", domain.Name);
-        table.AddRow("Status", domain.Status);
-        table.AddRow("Expires", domain.ExpiresAt ?? "-");
+        table.AddRow("Expires", domain.Expires ?? "-");
+        table.AddRow("Expired", domain.Expired ? "yes" : "no");
         table.AddRow("AutoRenew", domain.AutoRenew ? "yes" : "no");
-        table.AddRow("Registrant", domain.Registrant ?? "-");
-        table.AddRow("Admin Contact", domain.AdminContact ?? "-");
-        table.AddRow("Nameservers", domain.Nameservers is { Count: > 0 }
-            ? string.Join(", ", domain.Nameservers)
-            : "-");
+        table.AddRow("DNSSEC", domain.Dnssec ? "yes" : "no");
+        table.AddRow("Custom NS", domain.NameserversCustom ? "yes" : "no");
+        table.AddRow("Auth Key", domain.AuthKeyEnabled ? "yes" : "no");
 
         OutputFormatter.WriteTable(table);
         return 0;

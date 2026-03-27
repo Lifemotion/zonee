@@ -18,7 +18,7 @@ internal class DnsUpdateSettings : SharedSettings
 
     [CommandArgument(2, "<id>")]
     [Description("Record ID")]
-    public long Id { get; set; }
+    public string Id { get; set; } = "";
 
     [CommandArgument(3, "<destination>")]
     [Description("New destination value")]

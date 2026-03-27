@@ -1,4 +1,5 @@
 using Spectre.Console.Cli;
+using ZoneEe.Cli.Commands.Auth;
 using ZoneEe.Cli.Commands.Dns;
 using ZoneEe.Cli.Commands.Domain;
 
@@ -7,6 +8,19 @@ var app = new CommandApp();
 app.Configure(config =>
 {
     config.SetApplicationName("zonee");
+
+    config.AddBranch("auth", auth =>
+    {
+        auth.SetDescription("Manage credentials");
+
+        auth.AddCommand<AuthLoginCommand>("login")
+            .WithDescription("Set up encrypted credentials")
+            .WithExample("auth", "login");
+
+        auth.AddCommand<AuthLogoutCommand>("logout")
+            .WithDescription("Remove saved credentials")
+            .WithExample("auth", "logout");
+    });
 
     config.AddBranch("dns", dns =>
     {
@@ -41,9 +55,9 @@ app.Configure(config =>
             .WithDescription("Show domain details")
             .WithExample("domain", "info", "example.com");
 
-        domain.AddCommand<DomainRegisterCommand>("register")
-            .WithDescription("Register a new domain")
-            .WithExample("domain", "register", "example.com");
+        domain.AddCommand<DomainRenewCommand>("renew")
+            .WithDescription("Renew or reactivate a domain")
+            .WithExample("domain", "renew", "example.com");
     });
 });
 

@@ -22,9 +22,9 @@ internal class DomainListCommand : AsyncCommand<DomainListSettings>
             return 0;
         }
 
-        var table = OutputFormatter.CreateTable("Name", "Status", "Expires", "AutoRenew");
+        var table = OutputFormatter.CreateTable("Name", "Expires", "AutoRenew", "DNSSEC");
         foreach (var d in domains)
-            table.AddRow(d.Name, d.Status, d.ExpiresAt ?? "-", d.AutoRenew ? "yes" : "no");
+            table.AddRow(d.Name, d.Expires ?? "-", d.AutoRenew ? "yes" : "no", d.Dnssec ? "yes" : "no");
 
         OutputFormatter.WriteTable(table);
         return 0;

@@ -5,7 +5,7 @@ namespace ZoneEe.Models;
 public class DnsRecord
 {
     [JsonPropertyName("id")]
-    public long Id { get; set; }
+    public string Id { get; set; } = "";
 
     [JsonPropertyName("resource_url")]
     public string ResourceUrl { get; set; } = "";

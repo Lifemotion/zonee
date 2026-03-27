@@ -18,7 +18,7 @@ internal class DnsDeleteSettings : SharedSettings
 
     [CommandArgument(2, "<id>")]
     [Description("Record ID")]
-    public long Id { get; set; }
+    public string Id { get; set; } = "";
 }
 
 internal class DnsDeleteCommand : AsyncCommand<DnsDeleteSettings>

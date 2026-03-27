@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using ZoneEe.Models;
 
-namespace ZoneEe.Cli.Infrastructure;
+namespace ZoneEe;
 
 [JsonSerializable(typeof(List<DnsRecord>))]
 [JsonSerializable(typeof(DnsRecord))]
@@ -12,4 +12,4 @@ namespace ZoneEe.Cli.Infrastructure;
 [JsonSerializable(typeof(DomainRenew))]
 [JsonSerializable(typeof(List<DomainRenew>))]
 [JsonSerializable(typeof(DomainLinks))]
-internal partial class AppJsonContext : JsonSerializerContext;
+public partial class ZoneJsonContext : JsonSerializerContext;

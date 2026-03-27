@@ -4,48 +4,69 @@ namespace ZoneEe.Models;
 
 public class Domain
 {
+    [JsonPropertyName("identificator")]
+    public string? Identificator { get; set; }
+
     [JsonPropertyName("name")]
     public string Name { get; set; } = "";
 
-    [JsonPropertyName("status")]
-    public string Status { get; set; } = "";
+    [JsonPropertyName("expires")]
+    public string? Expires { get; set; }
 
-    [JsonPropertyName("expires_at")]
-    public string? ExpiresAt { get; set; }
-
-    [JsonPropertyName("autorenew")]
-    public bool AutoRenew { get; set; }
-}
-
-public class DomainDetail
-{
-    [JsonPropertyName("name")]
-    public string Name { get; set; } = "";
-
-    [JsonPropertyName("status")]
-    public string Status { get; set; } = "";
-
-    [JsonPropertyName("expires_at")]
-    public string? ExpiresAt { get; set; }
+    [JsonPropertyName("expired")]
+    public bool Expired { get; set; }
 
     [JsonPropertyName("autorenew")]
     public bool AutoRenew { get; set; }
 
-    [JsonPropertyName("registrant")]
-    public string? Registrant { get; set; }
+    [JsonPropertyName("delegated")]
+    public bool? Delegated { get; set; }
 
-    [JsonPropertyName("admin_contact")]
-    public string? AdminContact { get; set; }
+    [JsonPropertyName("dnssec")]
+    public bool Dnssec { get; set; }
 
-    [JsonPropertyName("nameservers")]
-    public List<string>? Nameservers { get; set; }
+    [JsonPropertyName("dnssec_supported")]
+    public bool DnssecSupported { get; set; }
+
+    [JsonPropertyName("renewal_notifications")]
+    public bool RenewalNotifications { get; set; }
+
+    [JsonPropertyName("has_pending_trade")]
+    public bool? HasPendingTrade { get; set; }
+
+    [JsonPropertyName("has_pending_dnssec")]
+    public bool HasPendingDnssec { get; set; }
+
+    [JsonPropertyName("reactivate")]
+    public bool Reactivate { get; set; }
+
+    [JsonPropertyName("auth_key_enabled")]
+    public bool AuthKeyEnabled { get; set; }
+
+    [JsonPropertyName("nameservers_custom")]
+    public bool NameserversCustom { get; set; }
+
+    [JsonPropertyName("_links")]
+    public DomainLinks? Links { get; set; }
 }
 
-public class DomainRegister
+public class DomainRenew
 {
-    [JsonPropertyName("name")]
-    public string Name { get; set; } = "";
+    [JsonPropertyName("domain")]
+    public string Domain { get; set; } = "";
 
     [JsonPropertyName("period")]
     public int Period { get; set; } = 1;
+}
+
+public class DomainLinks
+{
+    [JsonPropertyName("nameserver")]
+    public string? Nameserver { get; set; }
+
+    [JsonPropertyName("contact")]
+    public string? Contact { get; set; }
+
+    [JsonPropertyName("webhosting")]
+    public string? Webhosting { get; set; }
 }

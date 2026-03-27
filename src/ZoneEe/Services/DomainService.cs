@@ -1,4 +1,6 @@
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 using ZoneEe.Models;
 
 namespace ZoneEe.Services;
@@ -17,24 +19,29 @@ public class DomainService
     /// </summary>
     public async Task<List<Domain>> ListAsync(CancellationToken ct = default)
     {
-        return await _http.GetFromJsonAsync<List<Domain>>("domain", ct) ?? [];
+        return await _http.GetFromJsonAsync("domain", ZoneJsonContext.Default.ListDomain, ct) ?? [];
     }
 
     /// <summary>
     /// Gets detailed information about a domain.
+    /// API returns an array — this returns the first element.
     /// </summary>
-    public async Task<DomainDetail?> GetAsync(string domain, CancellationToken ct = default)
+    public async Task<Domain?> GetAsync(string domain, CancellationToken ct = default)
     {
-        return await _http.GetFromJsonAsync<DomainDetail>($"domain/{domain}", ct);
+        var list = await _http.GetFromJsonAsync($"domain/{domain}", ZoneJsonContext.Default.ListDomain, ct);
+        return list?.FirstOrDefault();
     }
 
     /// <summary>
-    /// Registers a new domain.
+    /// Renews or reactivates a domain.
+    /// API expects an array body: [{"domain":"...", "period":1}]
     /// </summary>
-    public async Task<DomainDetail?> RegisterAsync(DomainRegister request, CancellationToken ct = default)
+    public async Task RenewAsync(DomainRenew request, CancellationToken ct = default)
     {
-        var resp = await _http.PostAsJsonAsync("domain", request, ct);
-        resp.EnsureSuccessStatusCode();
-        return await resp.Content.ReadFromJsonAsync<DomainDetail>(ct);
+        var body = new List<DomainRenew> { request };
+        var json = JsonSerializer.Serialize(body, ZoneJsonContext.Default.ListDomainRenew);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var resp = await _http.PostAsync("order/domain/renew", content, ct);
+        await resp.EnsureZoneSuccess(ct);
     }
 }

@@ -37,21 +37,36 @@ Or download a standalone binary from [Releases](https://github.com/Lifemotion/zo
 
 ### Configuration
 
-Set credentials via environment variables:
+**Interactive setup (recommended):**
+
+```bash
+zonee auth login
+# Prompts for username, API key, and PIN
+# Credentials are stored encrypted (AES-256) in ~/.zonee/config
+```
+
+Every subsequent command will ask for the PIN to decrypt credentials.
+
+**Environment variables (for CI/CD, Docker, scripts):**
 
 ```bash
 export ZONE_USER=your-username
 export ZONE_APIKEY=your-api-key
 ```
 
-Or create `~/.zonee/config`:
+Environment variables bypass PIN and take priority over the config file.
 
-```
-username=your-username
-apikey=your-api-key
+To avoid PIN prompts in scripts while using the config file:
+
+```bash
+export ZONE_PIN=your-pin
 ```
 
-Environment variables take priority.
+**Remove saved credentials:**
+
+```bash
+zonee auth logout
+```
 
 ### Usage
 

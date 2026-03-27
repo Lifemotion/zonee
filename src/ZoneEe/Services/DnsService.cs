@@ -1,4 +1,6 @@
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 using ZoneEe.Models;
 
 namespace ZoneEe.Services;
@@ -18,16 +20,18 @@ public class DnsService
     public async Task<List<DnsRecord>> ListAsync(string domain, DnsRecordType type, CancellationToken ct = default)
     {
         var path = $"dns/{domain}/{ToPath(type)}";
-        return await _http.GetFromJsonAsync<List<DnsRecord>>(path, ct) ?? [];
+        return await _http.GetFromJsonAsync(path, ZoneJsonContext.Default.ListDnsRecord, ct) ?? [];
     }
 
     /// <summary>
     /// Gets a single DNS record by ID.
+    /// API returns an array — this returns the first element.
     /// </summary>
-    public async Task<DnsRecord?> GetAsync(string domain, DnsRecordType type, long recordId, CancellationToken ct = default)
+    public async Task<DnsRecord?> GetAsync(string domain, DnsRecordType type, string recordId, CancellationToken ct = default)
     {
         var path = $"dns/{domain}/{ToPath(type)}/{recordId}";
-        return await _http.GetFromJsonAsync<DnsRecord>(path, ct);
+        var list = await _http.GetFromJsonAsync(path, ZoneJsonContext.Default.ListDnsRecord, ct);
+        return list?.FirstOrDefault();
     }
 
     /// <summary>
@@ -36,30 +40,36 @@ public class DnsService
     public async Task<DnsRecord?> CreateAsync(string domain, DnsRecordType type, DnsRecordCreate record, CancellationToken ct = default)
     {
         var path = $"dns/{domain}/{ToPath(type)}";
-        var resp = await _http.PostAsJsonAsync(path, record, ct);
-        resp.EnsureSuccessStatusCode();
-        return await resp.Content.ReadFromJsonAsync<DnsRecord>(ct);
+        var json = JsonSerializer.Serialize(record, ZoneJsonContext.Default.DnsRecordCreate);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var resp = await _http.PostAsync(path, content, ct);
+        await resp.EnsureZoneSuccess(ct);
+        var list = await resp.Content.ReadFromJsonAsync(ZoneJsonContext.Default.ListDnsRecord, ct);
+        return list?.FirstOrDefault();
     }
 
     /// <summary>
     /// Updates an existing DNS record.
     /// </summary>
-    public async Task<DnsRecord?> UpdateAsync(string domain, DnsRecordType type, long recordId, DnsRecordUpdate record, CancellationToken ct = default)
+    public async Task<DnsRecord?> UpdateAsync(string domain, DnsRecordType type, string recordId, DnsRecordUpdate record, CancellationToken ct = default)
     {
         var path = $"dns/{domain}/{ToPath(type)}/{recordId}";
-        var resp = await _http.PutAsJsonAsync(path, record, ct);
-        resp.EnsureSuccessStatusCode();
-        return await resp.Content.ReadFromJsonAsync<DnsRecord>(ct);
+        var json = JsonSerializer.Serialize(record, ZoneJsonContext.Default.DnsRecordUpdate);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var resp = await _http.PutAsync(path, content, ct);
+        await resp.EnsureZoneSuccess(ct);
+        var list = await resp.Content.ReadFromJsonAsync(ZoneJsonContext.Default.ListDnsRecord, ct);
+        return list?.FirstOrDefault();
     }
 
     /// <summary>
     /// Deletes a DNS record by ID.
     /// </summary>
-    public async Task DeleteAsync(string domain, DnsRecordType type, long recordId, CancellationToken ct = default)
+    public async Task DeleteAsync(string domain, DnsRecordType type, string recordId, CancellationToken ct = default)
     {
         var path = $"dns/{domain}/{ToPath(type)}/{recordId}";
         var resp = await _http.DeleteAsync(path, ct);
-        resp.EnsureSuccessStatusCode();
+        await resp.EnsureZoneSuccess(ct);
     }
 
     private static string ToPath(DnsRecordType type) => type switch
