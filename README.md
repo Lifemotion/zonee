@@ -29,11 +29,25 @@ Manage your domains and DNS records from the terminal or from any .NET applicati
 
 **As a dotnet tool:**
 
+Requires .NET 10. Install if not already present:
+
+- **Windows:** `winget install Microsoft.DotNet.SDK.10`
+- **Linux** (snap packages are not supported, use the official script):
+
+```bash
+curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0
+echo 'export DOTNET_ROOT=$HOME/.dotnet' >> ~/.bashrc
+echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> ~/.bashrc
+source ~/.bashrc
+```
+
+Then install the tool:
+
 ```
 dotnet tool install -g Lfmt.Zonee.Cli
 ```
 
-**As a standalone binary:**
+**As a standalone binary** (no .NET required):
 
 Download from [Releases](https://github.com/Lifemotion/zonee/releases) (Windows x64, Linux x64, Linux ARM64).
 

@@ -29,11 +29,25 @@ Halda oma domeene ja DNS-kirjeid terminalist või mis tahes .NET rakendusest.
 
 **Dotnet tööriistana:**
 
+Nõuab .NET 10. Paigalda vajadusel:
+
+- **Windows:** `winget install Microsoft.DotNet.SDK.10`
+- **Linux** (snap-paketid ei tööta, kasuta ametlikku skripti):
+
+```bash
+curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0
+echo 'export DOTNET_ROOT=$HOME/.dotnet' >> ~/.bashrc
+echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> ~/.bashrc
+source ~/.bashrc
+```
+
+Seejärel paigalda tööriist:
+
 ```
 dotnet tool install -g Lfmt.Zonee.Cli
 ```
 
-**Iseseisva binaarfailina:**
+**Iseseisva binaarfailina** (.NET-i pole vaja):
 
 Laadi alla [Releases](https://github.com/Lifemotion/zonee/releases) lehelt (Windows x64, Linux x64, Linux ARM64).
 

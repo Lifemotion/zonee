@@ -29,11 +29,25 @@
 
 **Как dotnet-инструмент:**
 
+Требуется .NET 10. Установите при необходимости:
+
+- **Windows:** `winget install Microsoft.DotNet.SDK.10`
+- **Linux** (snap-пакеты не поддерживаются, используйте официальный скрипт):
+
+```bash
+curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0
+echo 'export DOTNET_ROOT=$HOME/.dotnet' >> ~/.bashrc
+echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> ~/.bashrc
+source ~/.bashrc
+```
+
+Затем установите инструмент:
+
 ```
 dotnet tool install -g Lfmt.Zonee.Cli
 ```
 
-**Как автономный бинарник:**
+**Как автономный бинарник** (.NET не требуется):
 
 Скачайте со страницы [Releases](https://github.com/Lifemotion/zonee/releases) (Windows x64, Linux x64, Linux ARM64).
 
