@@ -150,6 +150,6 @@ Zone.eu API is limited to **60 requests per minute per IP**. The `zonee` tool re
 
 - **"Credentials not found"** — run `zonee auth login` or set `ZONE_USER` + `ZONE_APIKEY`
 - **"Wrong PIN"** — incorrect PIN for encrypted config
-- **"Zone API error 422"** — invalid input, check record name/destination format
+- **"Zone API error 422"** — invalid input, check record name/destination format. For TXT records, always use the **full DNS name** (e.g. `asuid.example.com`, not just `asuid`)
 - **"Zone API error 429"** — rate limited, zonee retries automatically (max 3 times)
 - **Rate limit is 60 requests/minute** — avoid rapid bulk operations
