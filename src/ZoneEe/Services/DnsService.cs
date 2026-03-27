@@ -81,7 +81,10 @@ public class DnsService
         DnsRecordType.TXT => "txt",
         DnsRecordType.SRV => "srv",
         DnsRecordType.NS => "ns",
-        DnsRecordType.SOA => "soa",
+        DnsRecordType.CAA => "caa",
+        DnsRecordType.SSHFP => "sshfp",
+        DnsRecordType.URL => "url",
+        DnsRecordType.TLSA => "tlsa",
         _ => type.ToString().ToLowerInvariant()
     };
 }

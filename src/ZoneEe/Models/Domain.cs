@@ -4,11 +4,17 @@ namespace ZoneEe.Models;
 
 public class Domain
 {
+    [JsonPropertyName("resource_url")]
+    public string? ResourceUrl { get; set; }
+
     [JsonPropertyName("identificator")]
     public string? Identificator { get; set; }
 
     [JsonPropertyName("name")]
     public string Name { get; set; } = "";
+
+    [JsonPropertyName("delegated")]
+    public string? Delegated { get; set; }
 
     [JsonPropertyName("expires")]
     public string? Expires { get; set; }
@@ -16,23 +22,23 @@ public class Domain
     [JsonPropertyName("expired")]
     public bool Expired { get; set; }
 
-    [JsonPropertyName("autorenew")]
-    public bool AutoRenew { get; set; }
-
-    [JsonPropertyName("delegated")]
-    public bool? Delegated { get; set; }
-
     [JsonPropertyName("dnssec")]
     public bool Dnssec { get; set; }
 
     [JsonPropertyName("dnssec_supported")]
     public bool DnssecSupported { get; set; }
 
+    [JsonPropertyName("autorenew")]
+    public bool AutoRenew { get; set; }
+
+    [JsonPropertyName("renew_order")]
+    public string? RenewOrder { get; set; }
+
     [JsonPropertyName("renewal_notifications")]
     public bool RenewalNotifications { get; set; }
 
     [JsonPropertyName("has_pending_trade")]
-    public bool? HasPendingTrade { get; set; }
+    public int? HasPendingTrade { get; set; }
 
     [JsonPropertyName("has_pending_dnssec")]
     public bool HasPendingDnssec { get; set; }
@@ -42,6 +48,9 @@ public class Domain
 
     [JsonPropertyName("auth_key_enabled")]
     public bool AuthKeyEnabled { get; set; }
+
+    [JsonPropertyName("signing_required")]
+    public bool SigningRequired { get; set; }
 
     [JsonPropertyName("nameservers_custom")]
     public bool NameserversCustom { get; set; }
