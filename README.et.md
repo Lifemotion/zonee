@@ -2,6 +2,8 @@ Saadaval ka: [English](README.md) | [Eesti](README.et.md) | [Русский](REA
 
 # zonee / Lfmt.Zonee
 
+[![GitHub Release](https://img.shields.io/github/v/release/Lifemotion/zonee)](https://github.com/Lifemotion/zonee/releases) [![NuGet](https://img.shields.io/nuget/v/Lfmt.Zonee.svg)](https://www.nuget.org/packages/Lfmt.Zonee) [![NuGet](https://img.shields.io/nuget/v/Lfmt.Zonee.Cli.svg?label=Lfmt.Zonee.Cli)](https://www.nuget.org/packages/Lfmt.Zonee.Cli)
+
 Mitteametlik .NET klientteek ja käsurearakendus [Zone.eu API v2](https://api.zone.eu/v2) jaoks.
 
 Halda oma domeene ja DNS-kirjeid terminalist või mis tahes .NET rakendusest.
