@@ -136,6 +136,16 @@ zonee domain info example.com          # detailed info
 zonee domain renew example.com         # renew for 1 year
 ```
 
+## Important: API rate limit and usage policy
+
+Zone.eu API is limited to **60 requests per minute per IP**. The `zonee` tool retries automatically on HTTP 429, but you must follow these rules:
+
+- **Do not poll the API in a loop.** Don't run `zonee dns list` repeatedly to check if a record has propagated — DNS propagation is not instant and the API returns the current state in Zone.eu's nameservers, not the global DNS state.
+- **Do not make redundant requests.** If you just created a record and got a success response, trust it — don't list records again to verify.
+- **`zonee dns list <domain>` (all types) makes ~11 requests at once.** Use `zonee dns list <domain> <type>` when you only need a specific type.
+- **Cache results locally.** If you need domain or DNS info for multiple steps, run the command once and reuse the output.
+- **Use `--dry-run`** to verify commands before executing, not trial-and-error with real API calls.
+
 ## Troubleshooting
 
 - **"Credentials not found"** — run `zonee auth login` or set `ZONE_USER` + `ZONE_APIKEY`

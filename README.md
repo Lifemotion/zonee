@@ -130,6 +130,15 @@ zonee domain renew example.com --period 2
 | `--version` | Print version |
 | `--help` | Print help |
 
+### Rate limit
+
+Zone.eu API allows **60 requests per minute** per IP. The tool retries automatically on HTTP 429, but please use it responsibly:
+
+- Don't poll the API in a loop -- DNS propagation takes time and can't be checked through this API
+- `zonee dns list <domain>` (all types) makes ~11 requests at once -- use a specific type when possible
+- Use `--dry-run` to verify commands before executing
+- Don't re-read data you already have
+
 ---
 
 ## Library (Lfmt.Zonee)

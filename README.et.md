@@ -130,6 +130,15 @@ zonee domain renew example.com --period 2
 | `--version` | Kuva versioon |
 | `--help` | Kuva abi |
 
+### Päringupiirang
+
+Zone.eu API lubab **60 päringut minutis** IP-aadressi kohta. Tööriist proovib automaatselt uuesti HTTP 429 korral, kuid kasutage vastutustundlikult:
+
+- Ärge küsitlege API-t tsüklis -- DNS-i levik võtab aega ja seda ei saa selle API kaudu kontrollida
+- `zonee dns list <domain>` (kõik tüübid) teeb korraga ~11 päringut -- kasutage võimalusel konkreetset tüüpi
+- Kasutage `--dry-run` käskude kontrollimiseks enne täitmist
+- Ärge küsige uuesti andmeid, mis teil juba on
+
 ---
 
 ## Teek (Lfmt.Zonee)

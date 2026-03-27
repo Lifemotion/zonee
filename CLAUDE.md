@@ -27,7 +27,7 @@ dotnet publish src/ZoneEe.Cli -c Release -r win-x64   # native AOT binary
 
 - Base: `https://api.zone.eu/v2`
 - Auth: HTTP Basic (username + API key)
-- Rate limit: 60 req/min per IP
+- Rate limit: 60 req/min per IP. Don't poll, don't make redundant requests, cache results locally
 - Full OpenAPI spec: see `swagger.json` (obtained from api.zone.eu/v2 ReDoc page)
 - Domain registration is NOT available via API — only through web UI
 - Domain renewal: `POST /v2/order/domain/renew` with array body `[{"domain":"...","period":1}]`
