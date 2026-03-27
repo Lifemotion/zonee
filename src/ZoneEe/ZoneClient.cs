@@ -58,7 +58,7 @@ public class ZoneClient : IDisposable
 
     private static HttpClient CreateHttpClient(ZoneClientOptions options)
     {
-        var http = new HttpClient
+        var http = new HttpClient(new RateLimitHandler())
         {
             BaseAddress = new Uri(options.BaseUrl.TrimEnd('/') + "/")
         };

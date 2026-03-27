@@ -1,7 +1,18 @@
+using System.Reflection;
+using Spectre.Console;
 using Spectre.Console.Cli;
 using ZoneEe.Cli.Commands.Auth;
 using ZoneEe.Cli.Commands.Dns;
 using ZoneEe.Cli.Commands.Domain;
+
+if (args is ["--version" or "-v"])
+{
+    var version = Assembly.GetExecutingAssembly()
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
+        ?? "dev";
+    AnsiConsole.WriteLine($"zonee {version}");
+    return 0;
+}
 
 var app = new CommandApp();
 
@@ -27,7 +38,8 @@ app.Configure(config =>
         dns.SetDescription("Manage DNS records");
 
         dns.AddCommand<DnsListCommand>("list")
-            .WithDescription("List DNS records")
+            .WithDescription("List DNS records (all types if type omitted)")
+            .WithExample("dns", "list", "example.com")
             .WithExample("dns", "list", "example.com", "a");
 
         dns.AddCommand<DnsAddCommand>("add")

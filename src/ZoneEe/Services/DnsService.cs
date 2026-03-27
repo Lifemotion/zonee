@@ -20,7 +20,7 @@ public class DnsService
     public async Task<List<DnsRecord>> ListAsync(string domain, DnsRecordType type, CancellationToken ct = default)
     {
         var path = $"dns/{domain}/{ToPath(type)}";
-        return await _http.GetFromJsonAsync(path, ZoneJsonContext.Default.ListDnsRecord, ct) ?? [];
+        return await PaginationHelper.GetAllPagesAsync(_http, path, ZoneJsonContext.Default.ListDnsRecord, ct);
     }
 
     /// <summary>

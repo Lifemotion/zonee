@@ -19,7 +19,7 @@ public class DomainService
     /// </summary>
     public async Task<List<Domain>> ListAsync(CancellationToken ct = default)
     {
-        return await _http.GetFromJsonAsync("domain", ZoneJsonContext.Default.ListDomain, ct) ?? [];
+        return await PaginationHelper.GetAllPagesAsync(_http, "domain", ZoneJsonContext.Default.ListDomain, ct);
     }
 
     /// <summary>
