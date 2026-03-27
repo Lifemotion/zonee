@@ -81,7 +81,14 @@ app.Configure(config =>
 var result = app.Run(args);
 
 if (args.Length == 0)
+{
+    AnsiConsole.WriteLine();
+    AnsiConsole.MarkupLine("[yellow]AUTH:[/]");
+    AnsiConsole.MarkupLine("    zonee auth login                     Interactive setup (credentials encrypted with PIN)");
+    AnsiConsole.MarkupLine("    [dim]export[/] ZONE_USER=... ZONE_APIKEY=...  Environment variables (CI/CD, Docker)");
+    AnsiConsole.MarkupLine("    [dim]export[/] ZONE_PIN=...                   Skip interactive PIN prompt (scripts, Claude Code)");
     AnsiConsole.WriteLine();
     AnsiConsole.MarkupLine("Docs & source: [blue underline]https://github.com/Lifemotion/zonee[/]");
+}
 
 return result;

@@ -26,10 +26,16 @@ internal static class AuthProvider
 
         var encrypted = File.ReadAllBytes(configPath);
 
-        // PIN from env (for scripts) or interactive prompt
+        // PIN from env (for scripts/CI/Claude Code) or interactive prompt
         var pin = Environment.GetEnvironmentVariable("ZONE_PIN");
         if (string.IsNullOrEmpty(pin))
+        {
+            if (!AnsiConsole.Profile.Capabilities.Interactive)
+                throw new InvalidOperationException(
+                    "PIN required but running in non-interactive mode. " +
+                    "Set the ZONE_PIN environment variable, e.g.: export ZONE_PIN=<your-pin>");
             pin = AnsiConsole.Prompt(new TextPrompt<string>("PIN:").Secret());
+        }
 
         var plaintext = CryptoHelper.Decrypt(encrypted, pin);
         if (plaintext is null)
